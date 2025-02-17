@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surprise Me! - Kadh.ai</title>
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="app_organized.css">
     <script>
         function getRandomRecipe() {
             const recipes = [
@@ -21,10 +21,19 @@
             document.getElementById("recipe-image").src = recipe.image;
         }
     </script>
+    
 </head>
 <body>
     <div class="navbar">
-        <a href="homepage.html">Back to Home</a>
+        <p><a href="homepage.html">
+            <img src="https://i.ibb.co/x8rsTWDy/kadhai-9.png" alt="Kadhai Logo" class="logo">
+        </a></p>
+        <div class="nav-links">
+            <a href="search.html">Search Recipes</a>
+            <a href="categories.html">Browse Categories</a>
+            <a href="surprise.html">Surprise Me!</a>
+            <a href="favorites.html">Favorites</a>
+        </div>
     </div>
     <div class="container" style="text-align: center; padding: 40px;">
         <h1>Surprise Me!</h1>
