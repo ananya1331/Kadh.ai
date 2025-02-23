@@ -4,14 +4,14 @@
     text-align: center;
     padding: 20px;
     background-color: #222;
-    color: white;
+    color: rgb(255, 255, 255);
     margin-top: auto;
 }
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #fff8ec;
+    background-color: rgb(150, 150, 150);
     color: #333;
     display: flex;
     flex-direction: column;
@@ -100,23 +100,27 @@ body {
     background: #fff8ec;
     padding: 20px 0;
 }
+
 .carousel-track {
     display: flex;
-    gap: 20px;
+    gap: 10px;
     width: max-content;
     animation: scroll-right 20s linear infinite;
 }
+
 .carousel-track img {
     width: 150px;
     height: 150px;
     border-radius: 10px;
     object-fit: cover;
 }
-/* Smooth Left to Right Scroll */
+
+/* Left-to-Right Scroll */
 @keyframes scroll-right {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(100%); }
+    from { transform: translateX(-50%); } /* Start at left */
+    to { transform: translateX(0); } /* Move to right */
 }
+
 
 /*search*/
 
