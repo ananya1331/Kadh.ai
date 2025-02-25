@@ -3,108 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="app_organized.css">
     <title>Kadh.ai</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #fff8ec;
-            color: #333;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
-        .navbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 10px 30px;
-            background-color: #f8b400;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .logo {
-            width: 50px;
-            cursor: pointer;
-        }
-        .nav-links a {
-            margin: 0 15px;
-            text-decoration: none;
-            color: #fff;
-            font-size: 18px;
-        }
-        .hero {
-            text-align: center;
-            padding: 50px 20px;
-            flex: 1;
-        }
-        .hero img {
-            width: 150px;
-            animation: float 3s infinite ease-in-out;
-        }
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-        .search-bar {
-            margin-top: 20px;
-        }
-        .search-bar input {
-            width: 60%;
-            padding: 10px;
-            font-size: 16px;
-            border: 2px solid #f8b400;
-            border-radius: 5px;
-        }
-        .search-bar button {
-            padding: 10px 15px;
-            font-size: 16px;
-            background-color: #f8b400;
-            color: white;
-            border: none;
-            cursor: pointer;
-            border-radius: 5px;
-        }
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background-color: #222;
-            color: white;
-            margin-top: auto;
-        }
-        /* Carousel */
-        .carousel {
-            overflow: hidden;
-            width: 100%;
-            white-space: nowrap;
-            position: relative;
-            background: white;
-            padding: 20px 0;
-        }
-        .carousel-track {
-            display: flex;
-            gap: 20px;
-            width: max-content;
-            animation: scroll-right 20s linear infinite;
-        }
-        .carousel-track img {
-            width: 150px;
-            height: 150px;
-            border-radius: 10px;
-            object-fit: cover;
-        }
-        /* Smooth Left to Right Scroll */
-        @keyframes scroll-right {
-            from { transform: translateX(-100%); }
-            to { transform: translateX(100%); }
-        }
-    </style>
+    
 </head>
 <body>
     <div class="navbar">
+        <p><a href="homepage.html">
+            <img src="https://i.ibb.co/x8rsTWDy/kadhai-9.png" alt="Kadhai Logo" class="logo">
+        </a></p>
         <div class="nav-links">
             <a href="search.html">Search Recipes</a>
             <a href="categories.html">Browse Categories</a>
@@ -115,7 +22,7 @@
     
     <div class="hero">
         <h1>Smart Recipes, Traditional Flavors</h1>
-        <img src="kadhai.png" alt="Floating Kadhai">
+        <img src="https://i.ibb.co/nqV8n4Vk/just-kadhai.png" alt="Floating Kadhai">
         <div class="search-bar">
             <input type="text" placeholder="What’s in your kitchen?">
             <button>Cook Now!</button>
@@ -133,10 +40,6 @@
             <img src="https://t3.ftcdn.net/jpg/09/45/46/72/360_F_945467264_13rCx2nGR9wb9wrVt2g2FEFB4tE4b8sW.jpg" alt="Aaloo Paratha">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTeVsuoOBYKATvuyDc2LImZ4zDl7zjCUnTkig&s" alt="Khichdi">
             <img src="https://www.kannammacooks.com/wp-content/uploads/masala-fish-fry-recipe-ayala-meen-Mackerel-fry-8.jpg" alt="Fish Fry">
-
-
-
-
         </div>
     </div>
     

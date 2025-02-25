@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surprise Me! - Kadh.ai</title>
-    <link rel="stylesheet" href="app.css">
+    <link rel="stylesheet" href="app_organized.css">
     <script>
         function getRandomRecipe() {
             const recipes = [
@@ -21,16 +21,25 @@
             document.getElementById("recipe-image").src = recipe.image;
         }
     </script>
+    
 </head>
 <body>
     <div class="navbar">
-        <a href="homepage.html">Back to Home</a>
+        <p><a href="homepage.html">
+            <img src="https://i.ibb.co/x8rsTWDy/kadhai-9.png" alt="Kadhai Logo" class="logo">
+        </a></p>
+        <div class="nav-links">
+            <a href="search.html">Search Recipes</a>
+            <a href="categories.html">Browse Categories</a>
+            <a href="surprise.html">Surprise Me!</a>
+            <a href="favorites.html">Favorites</a>
+        </div>
     </div>
     <div class="container" style="text-align: center; padding: 40px;">
         <h1>Surprise Me!</h1>
         <p>Click the button to discover a random recipe.</p>
-        <button onclick="getRandomRecipe()" style="padding: 10px 20px; font-size: 16px; background-color: #f8b400; color: white; border: none; cursor: pointer; border-radius: 5px;">Get Recipe</button>
-        <div class="recipe-card" style="margin-top: 20px; display: inline-block; text-align: center;">
+        <button onclick="getRandomRecipe()" style="padding: 10px 20px; font-size: 16px; background-color: #f8b400; color: white; border: none; cursor: pointer; border-radius: 5px; position: fixed;left:45%;top:90% ">Get Recipe</button>
+        <div class="recipe-card" style="margin-top: 20px; display: inline-block; text-align: center; position: fixed;left:40%;text-align: center;">
             <img id="recipe-image" src="" alt="Random Recipe" style="width: 250px; border-radius: 10px; display: block; margin: auto;">
             <h3 id="recipe-name"></h3>
             <p id="recipe-desc"></p>
