@@ -5,26 +5,51 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Kadh.ai - Login</title>
   <link rel="stylesheet" href="app_organized.css">
-</head>
+</head>  
 <body>
-    <div class="login-container">
-      <div class="login-card">
-        <h1>Welcome to <span class="highlight">Kadh.ai</span></h1>
-        <p class="subtext">Please log in to continue</p>
-  
-        <form class="login-form">
-          <div class="input-group">
-            <input type="text" placeholder="Username or Email" required>
-          </div>
-          <div class="input-group">
-            <input type="password" placeholder="Password" required>
-          </div>
-          <button type="submit">Login</button>
-        </form>
-  
-        <p class="signup-link">Don't have an account? <a href="signup.html">Sign up</a></p>
-      </div>
+    
+  <div class="login-container">
+    <div class="login-card">
+      <h1>Welcome to <span class="highlight">Kadh.ai</span></h1>
+      <p class="subtext">Please log in to continue</p>
+
+      <form class="login-form" onsubmit="loginUser(event)">
+        <div class="input-group">
+          <input type="text" id="username" placeholder="Username or Email" required>
+        </div>
+        <div class="input-group">
+          <input type="password" id="password" placeholder="Password" required>
+        </div>
+        <p id="error-msg" style="color: red;"></p>
+        <button type="submit">Login</button>
+      </form>
+
+      <p class="signup-link">Don't have an account? <a href="signup.html">Sign up</a></p>
     </div>
-  </body>
-  
+  </div>
+
+  <script>
+    function loginUser(event) {
+      event.preventDefault(); // Prevent form refresh
+      
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const errorMsg = document.getElementById("error-msg");
+
+      if (!username || !password) {
+        errorMsg.textContent = "Please enter both username and password.";
+        return;
+      }
+
+      // Simulated login check
+      if (username === "admin" && password === "1234") {
+        alert("Login successful!");
+        window.location.href = "homepage.html";
+      } else {
+        errorMsg.textContent = "Invalid username or password.";
+      }
+    }
+  </script>
+
+</body>
 </html>
