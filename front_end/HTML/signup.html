@@ -13,25 +13,60 @@
       <h1>Join <span class="highlight">Kadh.ai</span></h1>
       <p class="subtext">Create your account</p>
 
-      <form class="signup-form">
+      <form class="signup-form" onsubmit="handleSignup(event)">
         <div class="input-group">
-          <input type="text" placeholder="Full Name" required>
+          <input type="text" id="name" placeholder="Full Name" required>
         </div>
         <div class="input-group">
-          <input type="email" placeholder="Email Address" required>
+          <input type="email" id="email" placeholder="Email Address" required>
         </div>
         <div class="input-group">
-          <input type="password" placeholder="Password" required>
+          <input type="password" id="password" placeholder="Password" required>
         </div>
         <div class="input-group">
-          <input type="password" placeholder="Confirm Password" required>
+          <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
         </div>
+        <p id="error-msg" style="color: red;"></p>
         <button type="submit">Sign Up</button>
       </form>
 
       <p class="signup-link">Already have an account? <a href="login.html">Log in</a></p>
     </div>
   </div>
+
+  <script>
+    // Simulated user database
+    const existingUsers = ["test@example.com", "admin@kadh.ai"];
+
+    function handleSignup(event) {
+      event.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value;
+      const confirmPassword = document.getElementById("confirmPassword").value;
+      const errorMsg = document.getElementById("error-msg");
+
+      // Clear previous error
+      errorMsg.textContent = "";
+
+      // Check if passwords match
+      if (password !== confirmPassword) {
+        errorMsg.textContent = "Passwords do not match.";
+        return;
+      }
+
+      // Check if user already exists
+      if (existingUsers.includes(email.toLowerCase())) {
+        errorMsg.textContent = "User already exists with this email.";
+        return;
+      }
+
+      // Simulate success
+      alert("Account created successfully!");
+      window.location.href = "login.html"; // Redirect to login page
+    }
+  </script>
 
 </body>
 </html>
