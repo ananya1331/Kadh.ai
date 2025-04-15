@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Recipes - Kadh.ai</title>
+    <link rel="stylesheet" href="app_organized.css">
+    <style>
+        /* --- Search Page Styles --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;background: linear-gradient(to bottom, #ffffff,#ffeb91 ); color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        /* Navbar & Footer Styles (Assume consistent with homepage) */
+         .navbar { display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.05); background-color: #ffffff; border-bottom: 1px solid #e0e0e0; height: 65px; padding: 0 40px; position: sticky; top: 0; z-index: 1000; }
+         .navbar p { margin: 0; } .navbar .logo { height: 50px; width: auto; }
+         .nav-links a { color: #555; font-size: 16px; font-weight: 500; text-decoration: none; margin: 0 12px; transition: color 0.2s ease; }
+         .nav-links a:hover, .nav-links a.active { color: #f8b400; }
+         .footer { background-color: #333; color: #ccc; padding: 20px; text-align: center; font-size: 0.9em; margin-top: auto; }
+         .footer a { color: #f8b400; text-decoration: none; } .footer a:hover { text-decoration: underline; }
+
+        .search-page-container { max-width: 60%; margin: 30px auto; padding: 20px 30px; flex-grow: 1; width: 95%; }
+        .search-header h1 { font-size: 2em; font-weight: 600; color: #222; margin-bottom: 30px; text-align: center; }
+
+        /* Search Bar */
+         .search-bar { max-width: 1500px; margin: 0 auto 30px auto; display: flex; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-radius: 50px; overflow: hidden; }
+         .search-bar input { flex-grow: 1; padding: 14px 25px; font-size: 16px; border: none; outline: none; border-radius: 50px 0 0 50px; background-color: #fff; }
+         .search-bar button { padding: 14px 25px; font-size: 16px; background-color: #f8b400; color: white; border: none; cursor: pointer; border-radius: 0 50px 50px 0; transition: background-color 0.2s ease; }
+         .search-bar button:hover { background-color: #e0a800; }
+
+        /* Filters */
+        .filters { text-align: center; margin-bottom: 40px; }
+        .filters button {
+            background-color: #f8b400; color: #ffffff; border: 1px solid #dee2e6;
+            padding: 8px 18px; margin: 5px; font-size: 0.9em; font-weight: 500; cursor: pointer; border-radius: 15px;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+        }
+        .filters button:hover { background-color: #dee2e6; border-color: #ced4da; }
+        .filters button.active-filter { background-color: #f8b400; color: white; border-color: #f8b400; } /* Style for active filter */
+
+        /* Results */
+        .recipe-results-grid { max-width: 50%; margin-left:25%; grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 20px; }
+        .placeholder-text { color: #888; font-style: italic; padding: 30px 10px; text-align: center; background-color: #ffffff; border-radius: 6px; grid-column: 1 / -1; }
+        /* Recipe Card Styles (ensure consistency) */
+         .recipe-card { background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #eee; box-shadow: 0 1px 3px rgba(0,0,0,0.05); transition: box-shadow 0.2s ease; text-decoration: none; display: block; color: inherit;}
+         .recipe-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+         .recipe-card img { width: 100%; height: 180px; object-fit: cover; display: block; }
+         .recipe-card h3 { font-size: 1.1em; padding: 15px 15px 5px 15px; margin: 0; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+         .recipe-card p { font-size: 0.9em; color: #777; padding: 0 15px 15px 15px; margin: 0;}
+         /* Actions only shown dynamically */
+         /* .recipe-card .card-actions { padding: 0 15px 15px 15px; text-align: right; } */
+         /* .recipe-card .card-actions button { ... } */
+
+    </style>
+</head>
+<body>
+     <div class="navbar">
+        <p><a href="homepage.html">
+            <img src="https://i.ibb.co/x8rsTWDy/kadhai-9.png" alt="Kadhai Logo" class="logo">
+        </a></p>
+        <div class="nav-links">
+            <a href="search.html" class="active">Search Recipes</a> <a href="categories.html">Browse Categories</a>
+            <a href="surprise.html">Surprise Me!</a>
+            <a href="login.html">Login</a>
+            <a href="signup.html">Sign Up</a>
+        </div>
+    </div>
+
+     <div class="search-page-container">
+         <div class="search-header">
+             <h1>Find Your Perfect Recipe</h1>
+             <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="Enter ingredients or recipe name...">
+                <button type="button" id="searchButton">Search</button>
+                 </div>
+         </div>
+
+         <div class="filters">
+             <button type="button" data-filter-type="category" data-filter-value="Vegetarian">Vegetarian</button>
+            <button type="button" data-filter-type="category" data-filter-value="Vegan">Vegan</button>
+            <button type="button" data-filter-type="category" data-filter-value="Chicken">Chicken</button>
+            <button type="button" data-filter-type="category" data-filter-value="Dessert">Dessert</button>
+            <button type="button" data-filter-type="cuisine" data-filter-value="Italian">Italian</button>
+             </div>
+
+         <div id="searchResults" class="recipe-results-grid">
+             <p class="placeholder-text">Enter a search term or select a filter to find recipes.</p>
+             </div>
+     </div>
+
+     <div class="footer">
+        <p>&copy; Kadh.ai | <a href="#">Contact</a> | <a href="#">About</a></p>
+    </div>
+
+     </body>
+</html>

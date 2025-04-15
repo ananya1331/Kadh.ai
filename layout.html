@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Kadh.ai{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='app_organized.css') }}">
+    <style>
+        /* Optional: Add some basic styling for fav buttons etc */
+        .recipe-card button {
+            padding: 5px 10px;
+            font-size: 0.9em;
+            margin-top: 10px;
+            margin-right: 5px;
+            cursor: pointer;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+        .fav-btn { background-color: #28a745; color: white; border-color: #28a745;}
+        .remove-fav-btn { background-color: #dc3545; color: white; border-color: #dc3545;}
+        .details-btn { background-color: #007bff; color: white; border-color: #007bff;}
+        .recipe-card button:hover { opacity: 0.8; }
+
+        /* Simple modal styling (Example - adapt as needed) */
+        .modal { display: none; position: fixed; z-index: 1000; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.6); }
+        .modal-content { background-color: #fefefe; margin: 10% auto; padding: 20px; border: 1px solid #888; width: 80%; max-width: 700px; border-radius: 5px; position: relative; }
+        .close-btn { color: #aaa; float: right; font-size: 28px; font-weight: bold; position: absolute; top: 10px; right: 20px; }
+        .close-btn:hover, .close-btn:focus { color: black; text-decoration: none; cursor: pointer; }
+        #modal-ingredients li { margin-bottom: 5px; } /* Styling for ingredient list */
+
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <p><a href="{{ url_for('homepage') }}">
+            <img src="https://i.ibb.co/x8rsTWDy/kadhai-9.png" alt="Kadhai Logo" class="logo">
+        </a></p>
+        <div class="nav-links">
+            <a href="{{ url_for('search_page') }}">Search Recipes</a>
+            <a href="{{ url_for('categories_page') }}">Browse Categories</a>
+            <a href="{{ url_for('surprise_page') }}">Surprise Me!</a>
+            {% if current_user.is_authenticated %}
+                <a href="{{ url_for('favorites_page') }}">Favorites</a>
+                <a href="{{ url_for('logout') }}">Logout ({{ current_user.username }})</a>
+            {% else %}
+                <a href="{{ url_for('login') }}">Login</a>
+                <a href="{{ url_for('signup') }}">Sign Up</a>
+            {% endif %}
+        </div>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+        <div class="flash-messages" style="padding: 0 20px;">
+          {% for category, message in messages %}
+            <div class="alert alert-{{ category }}" style="padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid transparent; background-color: {% if category == 'danger' %}#f8d7da{% elif category == 'success' %}#d4edda{% elif category == 'info' %}#d1ecf1{% else %}#fff3cd{% endif %}; color: {% if category == 'danger' %}#721c24{% elif category == 'success' %}#155724{% elif category == 'info' %}#0c5460{% else %}#856404{% endif %}; border-color: {% if category == 'danger' %}#f5c6cb{% elif category == 'success' %}#c3e6cb{% elif category == 'info' %}#bee5eb{% else %}#ffeeba{% endif %};">
+              {{ message }}
+            </div>
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+
+    <div class="main-content">
+        {% block content %}{% endblock %}
+    </div>
+
+     <div id="recipeDetailModal" class="modal">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 id="modal-recipe-name">Recipe Name</h2>
+        <img id="modal-recipe-image" src="" alt="Recipe Image" style="max-width: 300px; display: block; margin: 10px auto;">
+        <p><strong>Category:</strong> <span id="modal-recipe-category"></span></p>
+        <p><strong>Area/Cuisine:</strong> <span id="modal-recipe-area"></span></p>
+        <h3>Ingredients:</h3>
+        <ul id="modal-ingredients">
+          </ul>
+        <h3>Instructions:</h3>
+        <p id="modal-instructions" style="white-space: pre-wrap;"></p> {% if current_user.is_authenticated %}
+            <button id="modal-fav-btn" class="fav-btn" data-meal-id="">Add Favorite</button>
+         {% endif %}
+      </div>
+    </div>
+
+
+    <div class="footer">
+        <p>&copy; {{ now().year }} Kadh.ai | <a href="#" style="color: #f8b400;">Contact</a> | <a href="#" style="color: #f8b400;">About</a></p>
+        </div>
+
+    <script>
+        // Check login status (passed from Flask template if needed, or assumed true if fav buttons rendered)
+        // const isLoggedIn = {{ current_user.is_authenticated | tojson }}; // Example Jinja way
+
+        // --- Add to Favorites Function ---
+        function addFavorite(mealId, buttonElement) {
+            if (!mealId) return;
+            fetch(`/api/users/favorites/${mealId}`, { method: 'POST' })
+            .then(response => {
+                if (!response.ok) { throw new Error('Network response was not ok'); }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data.message);
+                if (buttonElement) {
+                    buttonElement.textContent = 'Favorited!';
+                    buttonElement.disabled = true; // Prevent multiple clicks
+                    // Or change style, or remove the button
+                }
+                // Optionally update the favorite status on the modal if open and matches
+                const modalFavBtn = document.getElementById('modal-fav-btn');
+                if (modalFavBtn && modalFavBtn.dataset.mealId === mealId) {
+                    modalFavBtn.textContent = 'Favorited!';
+                    modalFavBtn.disabled = true;
+                }
+            })
+            .catch(error => {
+                console.error("Error adding favorite:", error);
+                alert("Could not add favorite. Are you logged in?");
+            });
+        }
+
+        // --- View Recipe Details Function ---
+        function viewRecipeDetails(mealId) {
+            if (!mealId) return;
+            console.log(`Workspaceing details for meal ID: ${mealId}`);
+            fetch(`/api/recipes/${mealId}`)
+            .then(response => {
+                if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
+                return response.json();
+            })
+            .then(data => {
+                if (data && data.idMeal) {
+                    populateModal(data); // Populate and show the modal
+                } else {
+                     throw new Error('Recipe data not found in response.');
+                }
+            })
+            .catch(error => {
+                console.error("Error fetching recipe details:", error);
+                alert("Error loading recipe details.");
+            });
+        }
+
+        // --- Modal Handling Functions ---
+        const modal = document.getElementById("recipeDetailModal");
+
+        function populateModal(recipeData) {
+             document.getElementById("modal-recipe-name").textContent = recipeData.strMeal || 'N/A';
+             document.getElementById("modal-recipe-image").src = recipeData.strMealThumb || '';
+             document.getElementById("modal-recipe-category").textContent = recipeData.strCategory || 'N/A';
+             document.getElementById("modal-recipe-area").textContent = recipeData.strArea || 'N/A';
+             document.getElementById("modal-instructions").textContent = recipeData.strInstructions || 'No instructions provided.';
+
+             // Populate ingredients list
+             const ingredientsList = document.getElementById("modal-ingredients");
+             ingredientsList.innerHTML = ''; // Clear previous
+             for (let i = 1; i <= 20; i++) { // TheMealDB has up to 20 ingredients/measures
+                 const ingredient = recipeData[`strIngredient${i}`];
+                 const measure = recipeData[`strMeasure${i}`];
+                 if (ingredient && ingredient.trim() !== '') {
+                     const li = document.createElement('li');
+                     li.textContent = `${measure || ''} ${ingredient}`.trim();
+                     ingredientsList.appendChild(li);
+                 } else {
+                     break; // Stop if ingredient is empty
+                 }
+             }
+
+              // Update modal favorite button status
+             const modalFavBtn = document.getElementById('modal-fav-btn');
+             if(modalFavBtn) {
+                 modalFavBtn.dataset.mealId = recipeData.idMeal; // Set ID for the button
+                 // Check if 'is_favorite' flag was added in the backend /api/recipes/<meal_id> route
+                 if (recipeData.is_favorite) {
+                      modalFavBtn.textContent = 'Favorited!';
+                      modalFavBtn.disabled = true;
+                 } else {
+                     modalFavBtn.textContent = 'Add Favorite';
+                     modalFavBtn.disabled = false;
+                      // Re-attach listener in case modal is reused
+                     modalFavBtn.onclick = function(event) {
+                         event.stopPropagation();
+                         addFavorite(this.dataset.mealId, this);
+                     };
+                 }
+             }
+
+
+             modal.style.display = "block"; // Show the modal
+        }
+
+        function closeModal() {
+            if(modal) modal.style.display = "none";
+        }
+
+        // Close modal if user clicks outside of it
+        window.onclick = function(event) {
+          if (event.target == modal) {
+            closeModal();
+          }
+        }
+
+    </script>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

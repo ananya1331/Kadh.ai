@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Favorites - Kadh.ai</title>
+    <link rel="stylesheet" href="app_organized.css">
+    <style>
+        /* --- Favorites Page Styles --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f7f7f7; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        /* Navbar (Logged-In state) & Footer Styles */
+        .navbar { display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.05); background-color: #ffffff; border-bottom: 1px solid #e0e0e0; height: 65px; padding: 0 40px; position: sticky; top: 0; z-index: 1000; }
+        .navbar p { margin: 0; } .navbar .logo { height: 50px; width: auto; }
+        .nav-links a { color: #555; font-size: 16px; font-weight: 500; text-decoration: none; margin: 0 12px; transition: color 0.2s ease; }
+        .nav-links a:hover, .nav-links a.active { color: #f8b400; }
+        .footer { background-color: #333; color: #ccc; padding: 20px; text-align: center; font-size: 0.9em; margin-top: auto; }
+        .footer a { color: #f8b400; text-decoration: none; } .footer a:hover { text-decoration: underline; }
+
+        .content-container { max-width: 1100px; margin: 30px auto; padding: 20px 30px; flex-grow: 1; width: 95%; }
+        .content-container h1 { font-size: 2em; font-weight: 600; color: #222; margin-bottom: 30px; text-align: center; }
+
+        /* Results Grid */
+        .recipe-results-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 20px; }
+        .placeholder-text { color: #888; font-style: italic; padding: 30px 10px; text-align: center; background-color: #f0f0f0; border-radius: 6px; grid-column: 1 / -1; }
+        /* Recipe Card Styles */
+        .recipe-card { background: #fff; border-radius: 8px; overflow: hidden; border: 1px solid #eee; box-shadow: 0 1px 3px rgba(0,0,0,0.05); position: relative; transition: box-shadow 0.2s ease; text-decoration: none; display: block; color: inherit;}
+        .recipe-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        .recipe-card img { width: 100%; height: 180px; object-fit: cover; display: block; }
+        .recipe-card h3 { font-size: 1.1em; padding: 15px 15px 5px 15px; margin: 0; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .recipe-card p { font-size: 0.9em; color: #777; padding: 0 15px 15px 15px; margin: 0;}
+        /* Remove Button Overlay */
+        .remove-fav-btn-overlay {
+            position: absolute; top: 10px; right: 10px; background-color: rgba(220, 53, 69, 0.8); color: white; border: none;
+            border-radius: 50%; width: 30px; height: 30px; font-size: 1.2em; line-height: 28px; text-align: center;
+            padding: 0; box-shadow: 0 1px 3px rgba(0,0,0,0.3); transition: background-color 0.2s ease; z-index: 10; cursor: pointer;
+        }
+        .remove-fav-btn-overlay:hover { background-color: rgba(200, 33, 49, 1); }
+        /* Add details button if needed inside card */
+        .recipe-card .card-actions { padding: 0 15px 15px 15px; text-align: right; }
+        .recipe-card .details-btn { /* Example style */
+            padding: 6px 12px; font-size: 0.9em; cursor: pointer; border-radius: 4px; border: 1px solid #007bff; background-color: #007bff; color:white;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <p><a href="homepage.html">
+            <img src="https://i.ibb.co/x8rsTWDy/kadhai-9.png" alt="Kadhai Logo" class="logo">
+        </a></p>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="favorites.html" class="active">Favorites</a>
+            <a href="mealplanner.html">Meal Planner</a>
+            <a href="profile.html">Profile</a>
+            <a href="login.html">Logout</a>
+        </div>
+    </div>
+
+    <div class="content-container">
+        <h1>My Favorite Recipes</h1>
+
+        <div id="favoritesList" class="recipe-results-grid">
+            <p class="placeholder-text">Your saved recipes will appear here.</p>
+            </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; Kadh.ai | <a href="#">Contact</a> | <a href="#">About</a></p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Kadh.ai</title>
+    <link rel="stylesheet" href="app_organized.css">
+    <style>
+        /* --- Profile Page Specific Styles --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f7f7f7; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        /* Navbar & Footer Styles (Assume consistent with others) */
+        .navbar { display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.05); background-color: #ffffff; border-bottom: 1px solid #e0e0e0; height: 65px; padding: 0 40px; position: sticky; top: 0; z-index: 1000; }
+        .navbar p { margin: 0; } .navbar .logo { height: 50px; width: auto; }
+        .nav-links a { color: #555; font-size: 16px; font-weight: 500; text-decoration: none; margin: 0 12px; transition: color 0.2s ease; }
+        .nav-links a:hover, .nav-links a.active { color: #f8b400; }
+        .footer { background-color: #333; color: #ccc; padding: 20px; text-align: center; font-size: 0.9em; margin-top: auto; }
+        .footer a { color: #f8b400; text-decoration: none; } .footer a:hover { text-decoration: underline; }
+
+        .profile-container { max-width: 800px; margin: 30px auto; padding: 20px 30px; flex-grow: 1; width: 95%; background-color: #fff; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.05); border: 1px solid #eee; }
+        .profile-container h1 { font-size: 2em; font-weight: 600; color: #222; margin-bottom: 30px; text-align: center; }
+        .profile-info label { display: block; margin-bottom: 8px; font-weight: 500; color: #555; }
+        .profile-info input[type="text"],
+        .profile-info input[type="email"] { width: 100%; padding: 10px; margin-bottom: 15px; border: 1px solid #ddd; border-radius: 4px; font-size: 1em; }
+        .profile-info button { background-color: #f8b400; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; font-size: 1em; transition: background-color 0.2s ease; }
+        .profile-info button:hover { background-color: #e0a800; }
+        .profile-section { margin-bottom: 30px; padding-bottom: 20px; border-bottom: 1px solid #eee; }
+        .profile-section:last-child { border-bottom: none; }
+        .profile-section h2 { font-size: 1.5em; color: #333; margin-top: 0; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <p><a href="homepage.html">
+            <img src="https://i.ibb.co/x8rsTWDy/kadhai-9.png" alt="Kadhai Logo" class="logo">
+        </a></p>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="mealplanner.html">Meal Planner</a>
+            <a href="profile.html" class="active">Profile</a>
+            <a href="login.html">Logout</a>
+        </div>
+    </div>
+
+    <div class="profile-container">
+        <h1>My Profile</h1>
+
+        <div class="profile-section">
+            <h2>Personal Information</h2>
+            <div class="profile-info">
+                <label for="name">Name:</label>
+                <input type="text" id="name" value="[User's Name]" placeholder="Your Name">
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" value="[user@example.com]" placeholder="Your Email">
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <h2>Settings</h2>
+            <div class="profile-info">
+                <label for="preferences">Dietary Preferences:</label>
+                <input type="text" id="preferences" value="Vegetarian" placeholder="e.g., Vegetarian, Vegan, Gluten-Free">
+            </div>
+        </div>
+
+        <button>Save Changes</button>
+    </div>
+
+    <div class="footer">
+        <p>&copy; Kadh.ai | <a href="#">Contact</a> | <a href="#">About</a></p>
+    </div>
+
+</body>
+</html>

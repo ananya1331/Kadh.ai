@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - Kadh.ai</title>
+    <link rel="stylesheet" href="app_organized.css">
+     <style>
+        /* --- Signup Page Styles (Similar to Login) --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f7f7f7; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; padding: 20px; }
+        .auth-container { background-color: #ffffff; padding: 40px 35px; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 400px; text-align: center; }
+        .auth-logo { width: 80px; margin-bottom: 25px; }
+        .auth-container h1 { font-size: 1.8em; font-weight: 600; color: #222; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 0.9em; color: #555; }
+        .form-group input { width: 100%; padding: 12px 15px; border: 1px solid #ccc; border-radius: 6px; font-size: 1em; transition: border-color 0.2s ease; }
+        .form-group input:focus { border-color: #f8b400; outline: none; box-shadow: 0 0 0 2px rgba(248, 180, 0, 0.2); }
+        .auth-button { background-color: #f8b400; color: white; border: none; padding: 12px 20px; width: 100%; font-size: 1em; font-weight: 600; border-radius: 6px; cursor: pointer; transition: background-color 0.2s ease, box-shadow 0.2s ease; margin-top: 10px; }
+        .auth-button:hover { background-color: #e0a800; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .auth-link { margin-top: 25px; font-size: 0.9em; color: #555; }
+        .auth-link a { color: #f8b400; text-decoration: none; font-weight: 500; }
+        .auth-link a:hover { text-decoration: underline; }
+        /* Simple alert style */
+         .alert { padding: 10px; margin-bottom: 15px; border-radius: 4px; border: 1px solid transparent; }
+         .alert-warning { background-color: #fff3cd; color: #856404; border-color: #ffeeba; }
+    </style>
+</head>
+<body>
+     <div class="auth-container">
+        <a href="homepage.html"><img src="https://i.ibb.co/x8rsTWDy/kadhai-9.png" alt="Kadhai Logo" class="auth-logo"></a>
+        <h1>Create Your Kadh.ai Account</h1>
+
+         <form action="#" method="POST"> <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" name="email" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required>
+                 </div>
+             <div class="form-group">
+                <label for="confirm_password">Confirm Password</label>
+                <input type="password" id="confirm_password" name="confirm_password" required>
+                 </div>
+            <button type="submit" class="auth-button">Sign Up</button>
+        </form>
+        <div class="auth-link">
+            <span>Already have an account?</span>
+            <a href="login.html">Login</a>
+        </div>
+    </div>
+    </body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard - Kadh.ai</title>
+    <link rel="stylesheet" href="app_organized.css">
+    <style>
+        /* --- Modern Dashboard CSS - Additions & Overrides --- */
+
+        /* Reset and Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+            background-color: #f7f7f7; /* Lighter, off-white background */
+            color: #333; /* Default dark text color */
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* --- NAVBAR (Consistent with other pages) --- */
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0; /* Lighter border */
+            height: 65px;
+            padding: 0 40px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar p {
+            margin: 0;
+        }
+
+        .navbar .logo {
+            height: 50px;
+            width: auto;
+        }
+
+        .nav-links a {
+            color: #555;
+            font-size: 16px;
+            font-weight: 500;
+            text-decoration: none;
+            margin: 0 12px;
+            transition: color 0.2s ease;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #f8b400;
+        }
+
+        /* Main Dashboard Container */
+        .dashboard-container {
+            max-width: 1100px; /* Content width */
+            margin: 30px auto; /* Top/bottom margin, centered */
+            padding: 20px 30px; /* Internal padding */
+            flex-grow: 1;
+            width: 95%; /* Ensure some padding on small screens */
+        }
+
+        /* Headings */
+        .dashboard-container h1 {
+            font-size: 2em; /* Larger heading */
+            font-weight: 600;
+            color: #222;
+            margin-bottom: 25px;
+        }
+
+        .dashboard-container h2 {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #333;
+            margin-top: 40px; /* More space above sections */
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee; /* Subtle separator */
+            padding-bottom: 10px;
+        }
+
+        .dashboard-container h3 {
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #444;
+            margin-bottom: 15px;
+        }
+
+
+        /* --- Dashboard Sections Layout --- */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        /* --- Summary Cards --- */
+        .summary-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .summary-card {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            text-align: center;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .summary-card .metric-value {
+            display: block;
+            font-size: 2.2em;
+            font-weight: 600;
+            color: #f8b400; /* Accent color for the number */
+            margin-bottom: 5px;
+        }
+
+        .summary-card .metric-label {
+            font-size: 0.9em;
+            color: #666;
+        }
+
+        /* --- Quick Actions --- */
+        /* Using simpler buttons instead of full cards */
+        .quick-actions-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .action-button {
+            display: inline-flex; /* Align icon and text */
+            align-items: center;
+            background-color: #f8b400;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 20px; /* Pill shape */
+            text-decoration: none;
+            font-size: 0.95em;
+            font-weight: 500;
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .action-button:hover {
+            background-color: #e0a800; /* Darker shade on hover */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .action-button .icon { /* Class for emoji/icon */
+            margin-right: 8px;
+            font-size: 1.1em;
+        }
+
+
+        /* --- Recent Activity Section --- */
+        .recent-activity-section {
+            background-color: #ffffff;
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+            margin-top: 25px; /* Add space above card */
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        /* Using recipe-grid-small defined previously or define here */
+        .recipe-grid-small {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Slightly larger */
+            gap: 20px;
+        }
+
+        /* Placeholder Style */
+        .placeholder-text {
+            color: #888; /* Darker grey for light background */
+            font-style: italic;
+            padding: 30px 10px;
+            text-align: center;
+            background-color: #f9f9f9; /* Subtle background for placeholder area */
+            border-radius: 6px;
+            grid-column: 1 / -1; /* Span full width */
+        }
+
+        /* Styling for actual recipe cards if loaded by JS */
+        .recipe-grid-small .recipe-card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: 6px;
+            padding: 0; /* Image flush with borders */
+            overflow: hidden; /* Clip image */
+            box-shadow: none; /* Remove default shadow if needed */
+            transition: box-shadow 0.2s ease;
+        }
+
+        .recipe-grid-small .recipe-card:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .recipe-grid-small .recipe-card img {
+            width: 100%;
+            height: 110px; /* Adjust height */
+            object-fit: cover;
+            display: block;
+        }
+
+        .recipe-grid-small .recipe-card h3 { /* Use h3 for consistency */
+            font-size: 0.95em;
+            font-weight: 500;
+            padding: 10px 12px;
+            margin: 0;
+            color: #333;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .recipe-grid-small .recipe-card a { /* Style if card is a link */
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- FOOTER (Consistent with other pages) --- */
+        .footer {
+            background-color: #333;
+            color: #ccc;
+            padding: 20px;
+            text-align: center;
+            font-size: 0.9em;
+            margin-top: auto; /* Pushes footer down */
+        }
+
+        .footer a {
+            color: #f8b400;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <p><a href="homepage.html">
+            <img src="https://i.ibb.co/x8rsTWDy/kadhai-9.png" alt="Kadhai Logo" class="logo">
+        </a></p>
+        <div class="nav-links">
+            <a href="#" class="active">Dashboard</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="mealplanner.html">Meal Planner</a>
+            <a href="profile.html">Profile</a>
+            <a href="login.html">Logout</a>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+
+        <h1>Welcome!</h1>
+
+        <div class="summary-cards">
+            <div class="summary-card">
+                <span class="metric-value">[X]</span>
+                <span class="metric-label">Favorite Recipes</span>
+            </div>
+            <div class="summary-card">
+                <span class="metric-value">[Y]</span>
+                <span class="metric-label">Meals Planned</span>
+            </div>
+        </div>
+
+        <h2>Quick Actions</h2>
+        <div class="quick-actions-list">
+            <a href="search.html" class="action-button">
+                <span class="icon">🔍</span> Search Recipes
+            </a>
+            <a href="categories.html" class="action-button">
+                <span class="icon">🍲</span> Browse Categories
+            </a>
+            <a href="surprise.html" class="action-button">
+                <span class="icon">✨</span> Surprise Me!
+            </a>
+        </div>
+
+        <h2>Recent Activity</h2>
+        <div class="recent-activity-section">
+            <h3>Favourites</h3>
+            <div id="recentFavoritesList" class="recipe-grid-small">
+                <p class="placeholder-text">Your recent favorites will appear here.</p>
+            </div>
+        </div>
+
+        <div class="recent-activity-section">
+            <h3>Recently Viewed</h3>
+            <div id="recentViewedList" class="recipe-grid-small">
+                <p class="placeholder-text">Your recently viewed recipes will appear here.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <p>&copy; Kadh.ai | <a href="#">Contact</a> | <a href="#">About</a></p>
+    </div>
+
+</body>
+</html>

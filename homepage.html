@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kadh.ai - Your Personalized Recipe Generator</title>
+    <link rel="stylesheet" href="app_organized.css">
+    <style>
+        /* --- Homepage Specific Styles & Overrides --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: #f9f9f9; /* Light background */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            overflow-x: hidden; /* Prevent horizontal scrollbar due to floating kadhai */
+        }
+        /* --- Navbar (Using styles consistent with dashboard example) --- */
+        .navbar {
+            display: flex; align-items: center; justify-content: space-between;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            background-color: #ffffff;
+            border-bottom: 1px solid #e0e0e0; /* Lighter border */
+            height: 65px;
+            padding: 0 40px;
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .navbar p { margin: 0; }
+        .navbar .logo { height: 50px; width: auto; }
+        .nav-links a {
+            color: #555; font-size: 16px; font-weight: 500;
+            text-decoration: none; margin: 0 12px; transition: color 0.2s ease;
+        }
+        .nav-links a:hover { color: #f8b400; }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(to bottom, #ffffff,#ffeb91 );
+            text-align: center;
+            padding: 120px 20px 80px 20px; /* Adjusted top padding */
+            flex-grow: 1;
+            display: flex; flex-direction: column; justify-content: center;
+            position: relative; /* For positioning the floating kadhai */
+            overflow: visible; /* Allow the kadhai to be visible outside the bounds */
+        }
+        .hero-content {
+            opacity: 0.25; /* Initially hidden for fade-in effect */
+            transition: opacity 1.25s ease-in-out;
+        }
+        .hero-content.loaded {
+            opacity: 1;
+        }
+        .hero-content h1 { font-size: 2.8em; font-weight: 600; color: #222; margin-bottom: 15px; }
+        .hero-content p { font-size: 1.1em; color: #555; margin-bottom: 30px; max-width: 600px; margin-left: auto; margin-right: auto; }
+
+        /* --- Floating Kadhai --- */
+        .floating-kadhai {
+            position: relative;
+            margin-bottom: 65px;
+            margin-left: -5%;
+            scale: 200%;
+            top: 20px; /* Adjusted top position to bring it down */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px; /* Slightly reduced size */
+            height: auto;
+            z-index: 999; /* Ensure it's above the hero content */
+            animation: float 3s ease-in-out infinite alternate;
+        }
+
+        .hero img {
+            width: 150px;
+            animation: float 3s infinite ease-in-out;
+        }
+        @keyframes float {
+         0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+        }
+
+        /* AI Craving Input */
+        .craving-input {
+            max-width: 600px;
+            margin: 20px auto; /* Added margin for spacing */
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .craving-input h2 {
+            font-size: 1.8em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .craving-input textarea {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .craving-input button {
+            background-color: #f8b400;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s ease;
+        }
+
+        .craving-input button:hover {
+            background-color: #e0a800;
+        }
+
+        #craving-results {
+            margin-top: 15px;
+            font-style: italic;
+            color: #777;
+            font-size: 1.1em;
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background-color: #333; color: #ccc; padding: 20px;
+            text-align: center; font-size: 0.9em; margin-top: auto; /* Pushes footer down */
+        }
+        .footer a { color: #f8b400; text-decoration: none; }
+        .footer a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <p><a href="homepage.html"> <img src="https://i.ibb.co/x8rsTWDy/kadhai-9.png" alt="Kadhai Logo" class="logo">
+        </a></p>
+        <div class="nav-links">
+            <a href="search.html">Search Recipes</a>
+            <a href="categories.html">Browse Categories</a>
+            <a href="surprise.html">Surprise Me!</a>
+            <a href="login.html">Login</a>
+            <a href="signup.html">Sign Up</a>
+        </div>
+    </div>
+
+    <div class="hero">
+        <img src="https://i.ibb.co/nqV8n4Vk/just-kadhai.png" alt="Floating Kadhai" class="floating-kadhai">
+        <div class="hero-content">
+            <h1>Discover Your Next Favorite Meal</h1>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>&copy; Kadh.ai | <a href="#">Contact</a> | <a href="#">About</a></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const heroContent = document.querySelector('.hero-content');
+            heroContent.classList.add('loaded');
+        });
+    </script>
+
+</body>
+</html>

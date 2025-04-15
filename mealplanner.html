@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Meal Planner - Kadh.ai</title>
+    <link rel="stylesheet" href="app_organized.css">
+    <style>
+        /* --- Meal Planner Page Specific Styles --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; background-color: #f7f7f7; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        /* Navbar & Footer Styles (Assume consistent with others) */
+        .navbar { display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 4px rgba(0,0,0,0.05); background-color: #ffffff; border-bottom: 1px solid #e0e0e0; height: 65px; padding: 0 40px; position: sticky; top: 0; z-index: 1000; }
+        .navbar p { margin: 0; } .navbar .logo { height: 50px; width: auto; }
+        .nav-links a { color: #555; font-size: 16px; font-weight: 500; text-decoration: none; margin: 0 12px; transition: color 0.2s ease; }
+        .nav-links a:hover, .nav-links a.active { color: #f8b400; }
+        .footer { background-color: #333; color: #ccc; padding: 20px; text-align: center; font-size: 0.9em; margin-top: auto; }
+        .footer a { color: #f8b400; text-decoration: none; } .footer a:hover { text-decoration: underline; }
+
+        .mealplanner-container { max-width: 1100px; margin: 30px auto; padding: 20px 30px; flex-grow: 1; width: 95%; }
+        .mealplanner-container h1 { font-size: 2em; font-weight: 600; color: #222; margin-bottom: 30px; text-align: center; }
+
+        /* --- Meal Planner Page Specific Styles (Additions) --- */
+        #user-preferences, #dietary-restrictions, #ai-dish-generator, #weekly-plan {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+        }
+
+        #user-preferences h2, #dietary-restrictions h2, #ai-dish-generator h2, #weekly-plan h2 {
+            font-size: 1.5em;
+            color: #333;
+            margin-top: 0;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        #user-preferences label, #dietary-restrictions label, #ai-dish-generator label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        #user-preferences input[type="text"], #dietary-restrictions input[type="text"], #ai-dish-generator textarea {
+            width: calc(100% - 12px);
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        #ai-dish-generator button {
+            background-color: #f8b400;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.2s ease;
+        }
+
+        #ai-dish-generator button:hover {
+            background-color: #e0a800;
+        }
+
+        #dietary-restrictions label {
+            display: inline-block;
+            margin-right: 15px;
+            font-weight: normal;
+        }
+
+        #weekly-plan .day-plan {
+            margin-bottom: 25px;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+        }
+
+        #weekly-plan .day-plan h3 {
+            font-size: 1.4em;
+            color: #555;
+            margin-top: 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 5px;
+        }
+
+        #weekly-plan .meal-slot {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px dashed #ccc;
+            border-radius: 6px;
+            background-color: #fff;
+        }
+
+        #weekly-plan .meal-slot h4 {
+            font-size: 1.1em;
+            color: #666;
+            margin-top: 0;
+            margin-bottom: 5px;
+        }
+
+        #weekly-plan .recipe-placeholder {
+            font-style: italic;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <p><a href="homepage.html">
+            <img src="https://i.ibb.co/x8rsTWDy/kadhai-9.png" alt="Kadhai Logo" class="logo">
+        </a></p>
+        <div class="nav-links">
+            <a href="dashboard.html">Dashboard</a>
+            <a href="favorites.html">Favorites</a>
+            <a href="mealplanner.html" class="active">Meal Planner</a>
+            <a href="profile.html">Profile</a>
+            <a href="login.html">Logout</a>
+        </div>
+    </div>
+
+    <div class="mealplanner-container">
+        <h1>My Meal Planner</h1>
+
+        <section id="user-preferences">
+            <h2>Your Preferences</h2>
+            <label for="cuisine-preference">Favorite Cuisines:</label>
+            <input type="text" id="cuisine-preference" placeholder="e.g., Italian, Indian, Mexican">
+
+            <label for="favorite-ingredients">Preferred Ingredients:</label>
+            <input type="text" id="favorite-ingredients" placeholder="e.g., Chicken, Salmon, Vegetables">
+
+            </section>
+
+        <section id="dietary-restrictions">
+            <h2>Dietary Restrictions</h2>
+            <label>
+                <input type="checkbox" name="dietary" value="vegetarian"> Vegetarian
+            </label>
+            <label>
+                <input type="checkbox" name="dietary" value="vegan"> Vegan
+            </label>
+            <label>
+                <input type="checkbox" name="dietary" value="gluten-free"> Gluten-Free
+            </label>
+            <label for="allergies">Allergies:</label>
+            <input type="text" id="allergies" placeholder="e.g., Peanuts, Dairy">
+
+            </section>
+
+        <section id="ai-dish-generator">
+            <h2>AI Dish Generator</h2>
+            <label for="ai-prompt">Describe what you'd like to eat:</label>
+            <textarea id="ai-prompt" rows="4" placeholder="e.g., A spicy pasta dish with lots of vegetables, A healthy breakfast smoothie with berries"></textarea>
+            <button id="generate-dish-btn">Generate Dish Idea</button>
+            <div id="generated-dish-idea" style="margin-top: 15px;">
+                </div>
+        </section>
+
+        <section id="weekly-plan">
+            <h2>Weekly Meal Plan</h2>
+            <div class="day-plan">
+                <h3>Monday</h3>
+                <div class="meal-slot" data-day="monday" data-meal="breakfast">
+                    <h4>Breakfast:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="monday" data-meal="lunch">
+                    <h4>Lunch:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="monday" data-meal="dinner">
+                    <h4>Dinner:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+            </div>
+
+            <div class="day-plan">
+                <h3>Tuesday</h3>
+                <div class="meal-slot" data-day="tuesday" data-meal="breakfast">
+                    <h4>Breakfast:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="tuesday" data-meal="lunch">
+                    <h4>Lunch:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="tuesday" data-meal="dinner">
+                    <h4>Dinner:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+            </div>
+
+            <div class="day-plan">
+                <h3>Wednesday</h3>
+                <div class="meal-slot" data-day="wednesday" data-meal="breakfast">
+                    <h4>Breakfast:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="wednesday" data-meal="lunch">
+                    <h4>Lunch:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="wednesday" data-meal="dinner">
+                    <h4>Dinner:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+            </div>
+
+            <div class="day-plan">
+                <h3>Thursday</h3>
+                <div class="meal-slot" data-day="thursday" data-meal="breakfast">
+                    <h4>Breakfast:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="thursday" data-meal="lunch">
+                    <h4>Lunch:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="thursday" data-meal="dinner">
+                    <h4>Dinner:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+            </div>
+
+            <div class="day-plan">
+                <h3>Friday</h3>
+                <div class="meal-slot" data-day="friday" data-meal="breakfast">
+                    <h4>Breakfast:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="friday" data-meal="lunch">
+                    <h4>Lunch:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="friday" data-meal="dinner">
+                    <h4>Dinner:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+            </div>
+
+            <div class="day-plan">
+                <h3>Saturday</h3>
+                <div class="meal-slot" data-day="saturday" data-meal="breakfast">
+                    <h4>Breakfast:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="saturday" data-meal="lunch">
+                    <h4>Lunch:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="saturday" data-meal="dinner">
+                    <h4>Dinner:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+            </div>
+
+            <div class="day-plan">
+                <h3>Sunday</h3>
+                <div class="meal-slot" data-day="sunday" data-meal="breakfast">
+                    <h4>Breakfast:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="sunday" data-meal="lunch">
+                    <h4>Lunch:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+                <div class="meal-slot" data-day="sunday" data-meal="dinner">
+                    <h4>Dinner:</h4>
+                    <p class="recipe-placeholder">Suggest a recipe here</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="footer">
+        <p>&copy; Kadh.ai | <a href="#">Contact</a> | <a href="#">About</a></p>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const generateDishBtn = document.getElementById('generate-dish-btn');
+            const generatedDishIdeaDiv = document.getElementById('generated-dish-idea');
+            const cuisinePreferenceInput = document.getElementById('cuisine-preference');
+            const favoriteIngredientsInput = document.getElementById('favorite-ingredients');
+            const dietaryCheckboxes = document.querySelectorAll('input[name="dietary"]');
+            const allergiesInput = document.getElementById('allergies');
+
+            // Basic function to get user preferences (for now, just logs to console)
+            function getUserPreferences() {
+                const cuisines = cuisinePreferenceInput.value;
+                const ingredients = favoriteIngredientsInput.value;
+                const dietary = Array.from(dietaryCheckboxes)
+                                    .filter(checkbox => checkbox.checked)
+                                    .map(checkbox => checkbox.value);
+                const allergies = allergiesInput.value;
+
+                console.log('User Preferences:', { cuisines, ingredients, dietary, allergies });
+                // In a real scenario, you'd send this to the backend
+            }
+
+            if (generateDishBtn) {
+                generateDishBtn.addEventListener('click', function() {
+                    getUserPreferences(); // Log preferences when generating (for now)
+                    const prompt = document.getElementById('ai-prompt').value;
+                    // In a real scenario, you would send this prompt to an AI service
+                    const aiGeneratedDish = `AI suggests: Delicious dish based on "${prompt}" (This is a placeholder)`;
+                    generatedDishIdeaDiv.textContent = aiGeneratedDish;
+                });
+            }
+
+            // You can add more JavaScript here later to handle saving preferences,
+            // suggesting meals (even if they are static for now), and more UI interactions.
+        });
+    </script>
+</body>
+</html>
